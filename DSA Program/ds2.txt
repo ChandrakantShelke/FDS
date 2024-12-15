@@ -1,0 +1,128 @@
+'''
+Assignment - 2
+---------------
+Write a Python program to store marks scored in subject “Fundamental of Data 
+Structure” by N students in the class. Write functions to compute following:
+a) The average score of class 
+b) Highest score and lowest score of class 
+c) Count of students who were absent for the test
+d) Display mark with highest frequency
+'''
+
+def accept (A): 
+    n = int (input("Enter the total number of students : ")) #take the input from user
+    for i in range ( n):
+        while True:
+            x = input("Enter the marks of  student %d : "%(i+1))
+            if ( x == "AB"):     #if we put the AB then value will be -1
+                x=-1
+                break
+            x=int (x) #Convert string into int
+            if (x>=0 and x<=30):
+                break
+            else:
+               print("Enter the valid marks of student \n")
+        A.append (x)
+
+def display (A):
+    print ("Marks stored by ")
+    for i in range (len(A)):
+        if (A[i] == -1):
+            print ( "student %d  is zero because student was absent. ")
+        else:
+            print ("student %d is %d"%(i+1, A[i]))
+
+def average (A):
+        n = len(A)
+        sum = 0
+        for i in range (n):
+            if (A[i]!= -1):
+                sum = sum + A[i]
+        avg =  (sum / n)
+        print ("Average of class is %.2f : \n" %avg)
+
+def absent_st (A):
+    count =0
+    for i in range (len (A)):
+        if ( A[i]==-1):
+            count = count + 1
+    print("Total number of absent students for the test is : ", count)
+
+def frequency (A):
+    freq = 0
+    for  i in range (len (A)):
+        count = 0
+        if (A[i]!=-1 ):
+            for j in range ( len (A)):
+                if (A[i]== A[j] ):
+                    count+=1
+        if (freq < count):
+            mark = A[i]
+            freq = count
+    print ("Marks with the highest frequency is %d  with the frequency %d"%(mark, freq))
+
+def highestLowest (A):
+    min = 31
+    max = -1
+    for i in range (len (A)):
+        if (min > A[i] and A[i]!= -1) :
+            min = A [i]
+            min_index = i+1
+        if (max < A[i]):
+            max = A[i]
+            max_index = i+1
+    print ("The highest marks scored in a class is %d by the student %d "% (max, max_index))
+    print ("The lowest marks scored in a class is %d by the student %d "% (min, min_index))
+    
+# A = []
+# accept (A)
+# display (A)
+# average (A)
+# absent_st(A)
+# frequency (A)
+# highestLowest (A)
+def main ():
+    FDS_marks =[]    
+    print ("1:Accept FDS marks ")
+    print ("2:Average score of class ")
+    print ("3:Highest score and lowest score of class ")
+    print ("4:Count of students who were absent for the test ")
+    print ("5:Display marks with highest frequency  ")
+    print ("6:Exit ")
+    
+    while True:
+        
+        ch = int (input("Enter your choice: "))
+        if (ch==6):
+            print("End of the program!!")
+            break
+        elif(ch==1):
+            accept(FDS_marks)
+            display(FDS_marks)
+        elif(ch==2):
+            average(FDS_marks)
+        elif(ch==3):
+            highestLowest(FDS_marks)
+        elif(ch==4):
+            absent_st(FDS_marks)
+        elif(ch==5):
+            frequency(FDS_marks)
+        else:
+            ("Wrong choice entered !! Try again")
+            exit(0)
+main()
+
+        
+
+
+    
+        
+
+        
+                  
+            
+
+        
+
+
+

@@ -1,0 +1,103 @@
+#Assignment-3
+'''
+Write a Python program to compute following operations on String:
+a) To display word with the longest length
+b) To determines the frequency of occurrence of particular character in the string  //Substring
+c) To check whether given string is palindrome or not 
+d) To display index of first appearance of the substring // substring
+e) To count the occurrences of each word in a given string
+'''
+
+def sub_string(a):
+    subString = input("Enter your substring: ")
+    for i in range(len(a)): #Lenght of String
+        newSubString = ""  #
+        for j in range(len(subString)): 
+            if subString[j] == a[i]:
+                newSubString += a[i]
+                i += 1
+            if len(newSubString) == len(subString): # b)To determines the frequency of occurrence of particular character in the string
+                print("found at index: ",i-len(subString))
+                break
+
+def first_occurance(a):
+    subString = input("Enter your substring: ")
+    for i in range(len(a)):
+        newSubString = ""
+        for j in range(len(subString)):
+            if subString[j] == a[i]:
+                newSubString += a[i]
+                i += 1
+            if len(newSubString) == len(subString):
+                print("first occurance at index: ",i-len(subString))
+                return 0 
+
+def longest_word(a): 
+    longest_word= " "
+    b = " "
+    a = a + b
+    split = []
+    tmp = ''
+    for i in  a:    
+        if i != ' ':
+            tmp += i
+        else:
+            split.append(tmp)
+            tmp = ''
+    for i in range (len(split)):
+        if(len(split[i])>len(longest_word)):
+            longest_word =split[i]
+    print(longest_word)
+
+
+#Perform operation E
+def count_sub_string(a):
+    #subString = input("Enter a string: ")
+    count = 0
+    l= a.split()    #Split the string whole word 
+    l1=[]
+    for i in l: #here first i is india
+        if i not in l1:
+            l1.append(i)
+            print(i,": ",l.count(i))
+
+
+def palindrome(a):
+    count = 0   
+    for i in range(len(a)):
+        if a[i]==a[len(a)-i-1]: #a[i] goes forward a[len(a)-i-1 means start from end and goes reverse 
+            count += 1
+        else:break
+    if count == len(a): #Here count = len(a) its palindrome
+        print("yes,it is a palindrome") 
+    else:print("no, it is not a palindrome")
+
+def main():
+    a = str(input("Enter main string: "))
+    while True:
+        print("\t\t1: Display word with longest length")
+        print("\t\t2: Determine the frequncy of occurrence of particular character in a string")
+        print("\t\t3: check whether given string is palindrome or not")
+        print("\t\t4: Display index of frist apperrance of the substring ")
+        print("\t\t5: count the occurrence of each word in a given string ")
+        print("\t\t6: Exit ")
+        
+        ch= int(input("Enter your choice: "))
+        if(ch==6):
+            print("End of program")
+            break
+        elif(ch==1):
+            longest_word(a)
+        elif(ch==2):
+            sub_string(a) 
+        elif(ch==3):
+            # a  = input("Enter string: ")
+            palindrome(a)
+        elif(ch==4):
+            first_occurance(a)
+        elif(ch==5):
+            count_sub_string(a)
+        else:
+            print("Wrong choice entered !")
+
+main()

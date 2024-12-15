@@ -1,0 +1,173 @@
+
+/*
+The ticket booking system of Cinemax theater has to be implemented using C++ program. 
+There are 10 rows and 7 seats in each row. Doubly circular linked list has to be 
+maintained to keep track of free seats at rows. Assume some random booking to start 
+with. Use array to store pointers (Head pointer) to each row. On demand
+a) The list of available seats is to be displayed
+b) The seats are to be booked
+c) The booking can be cancelled
+*/
+
+
+
+#include <iostream>
+using namespace std;
+
+//create list
+class ticket{
+	int id;
+	int status;
+	int seatno;
+	ticket * prev;
+	ticket * next;
+	public : 
+		
+		ticket(){}
+		
+		ticket(int s1){
+			id = 0;
+			//1 for available and 0 for booked
+			status = 1;
+			seatno = s1;
+			prev = NULL;
+			next = NULL;
+		}
+		void theater(ticket *&head, ticket *&last);
+		void display(ticket * &head);
+		void book(ticket * &head);
+		void cancel(ticket * &head);
+};
+
+void ticket :: theater(ticket *&head, ticket *&tail){
+	head -> next = tail;
+	head -> prev = tail;
+	tail -> next = head;
+	tail -> prev = head;
+	ticket * temp = head;
+	//inserting from second node
+	for (int i = 2 ; i < 70 ; i ++){
+		ticket * bet = new ticket(i);
+		bet -> next = temp -> next;
+		bet -> prev = temp;
+		temp -> next -> prev =bet;
+		temp -> next = bet;
+		temp = temp -> next;
+	}
+}
+
+void ticket :: display(ticket * &head){
+	ticket * temp = head;
+	for (int i = 1 ; i <= 70 ; i ++){
+		if (temp -> seatno/10 == 0){
+			cout << "\tS0" << temp -> seatno;
+		}
+		else{
+			cout << "\tS" << temp -> seatno;
+		}
+		if (temp -> status == 1){
+			cout << " |___|";
+		}
+		else{
+			cout << " |_B_|";
+		}
+		if (i%7 == 0){
+			cout << endl << endl;
+		}
+		temp = temp -> next;
+	} 
+
+};
+
+void ticket :: book(ticket *&head ){
+	int seat, pid;
+	cout << "\n Enter the seat number : S";
+	cin >> seat;
+	while(seat >70 || seat < 1){
+		cout << "wrong seat number .. try again\n";
+		cout << "\n Enter the seat number : S";
+		cin >> seat;
+	}
+	ticket * temp = head;
+	while (temp -> seatno != seat){
+		temp = temp -> next;
+	}
+	if (temp -> status == 0){
+		cout << "\nSeat is already taken !!! TRY AGAIN with another seat\n";
+		book(head);
+	}
+	else{
+		cout <<"\nEnter your ID : ";
+		cin >> pid;
+		temp -> id = pid;
+		temp -> status = 0;
+	}
+	cout << "\n \tSEAT BOOKED SUCCESSFULLY!!!\n";
+	
+}
+
+void ticket :: cancel(ticket * &head){
+	int seat,pid;
+	cout << "\n Enter the seat number : S";
+	cin >> seat;
+	while(seat >70 || seat < 1){
+		cout << "wrong seat number .. try again\n";
+		cout << "\n Enter the seat number : S";
+		cin >> seat;
+	}
+	ticket * temp = head;
+	while (temp -> seatno != seat){
+		temp = temp -> next;
+	}
+	if (temp -> status == 1){
+		cout << "\nSeat is already vacant.. nothing to delete\n";
+		return;
+	}
+	else{
+		cout <<"\nEnter your ID : ";
+		cin >> pid;
+		if (temp -> id == pid){
+			temp -> status = 1;
+			cout << "\n \tSEAT CANCELLED SUCCESSFULLY!!!\n";
+		}
+		else{
+			cout << "\nWrong ID.. cannot cancel booking";
+		}
+	}
+}
+
+
+int main(){
+	int to_con = 1;
+	ticket * head = new ticket(1);
+	ticket * last = new ticket(70);
+	ticket t1;
+	t1.theater(head,last);
+	
+	while (to_con == 1){
+		cout << "\n\n\t\t*********** WELCOME TO BOOK MY MOVIE********";			
+		cout << "\n\t\t  1 - Display all available seats";
+		cout << "\n\t\t  2 - Book a particular seat";
+		cout << "\n\t\t  3 - Cancel a seat";
+		int ask ;
+		cout << "\n\n enter your choice : ";
+		cin >> ask;
+		switch(ask){
+			case 1:
+				t1.display(head);
+				break;
+			case 2:
+				t1.book(head);
+				break;
+			case 3:
+				t1.cancel(head);
+				break;
+			default :
+				cout << "wrong input.. try again";
+				break;
+		}
+		cout << "do you want to continue(1/0) : ";
+		cin >> to_con;
+	}
+
+}
